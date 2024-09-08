@@ -56,6 +56,7 @@ def main():
     # st.sidebar.title("Navigation")
     # page = st.sidebar.selectbox("Go to", ["Front-end", "PDF Generation"])
     #if page == "Front-end":
+    
     create_table()   
     data = front_end()
     submit = st.button("Generate PDF")
@@ -71,6 +72,11 @@ def main():
             st.error("Please enter a valid PAN number")
             return False
         
+        aadhar_pattern = re.compile(r'^[2-9]{1}[0-9]{3}\s(?!0000)[0-9]{4}\s(?!0000)[0-9]{4}$')
+        if not re.fullmatch(aadhar_pattern, data['aadhaar_no']):
+            st.error("Please enter a valid Aadhar number")
+            return False
+
         save_to_db(data)
         # PDF Generation
         pdf_path = generate_pdf(data)
