@@ -65,6 +65,12 @@ def main():
             st.error("Please enter a valid 10-digit mobile number")
             return False
 
+        # Validating PAN number
+        pan_pattern = re.compile(r'^[A-Z]{3}[ABCFGPHJLT]{1}[A-Z]{1}(?!0000)[0-9]{4}[A-Z]{1}$')
+        if not re.fullmatch(pan_pattern, data['pan']):
+            st.error("Please enter a valid PAN number")
+            return False
+        
         save_to_db(data)
         # PDF Generation
         pdf_path = generate_pdf(data)
